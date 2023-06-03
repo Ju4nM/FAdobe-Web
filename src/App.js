@@ -5,7 +5,7 @@ import { LightControls } from './components/lightControls';
 import { io } from 'socket.io-client';
 import React from 'react';
 
-let socket = io("http://localhost:3000");
+let socket = io("https://fadobe.up.railway.app");
 
 function extractLightData (lights) {
   return lights.reduce((acc, light) => {
