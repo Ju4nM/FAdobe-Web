@@ -1,38 +1,52 @@
-.App {
-  text-align: center;
+main {
+  @apply text-white;
+  @apply w-screen;
+  @apply h-screen;
+  @apply flex;
+  @apply flex-col;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.content {
+  @apply bg-[#313131];
+  @apply w-full;
+  @apply h-full;
+  @apply p-2;
+  @apply p-10;
+  @apply flex;
+  /* @apply items-center; */
+  @apply flex-col;
+  @apply gap-4;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.btn {
+  @apply text-black;
+  @apply text-base;
+  @apply font-semibold;
+  @apply outline-none;
+  @apply border-none;
+  @apply p-2;
+  @apply rounded-md;
+  @apply w-full;
+  @apply transition-all;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.btn-success {
+  @apply bg-green-500;
+  @apply hover:bg-green-600;
+  @apply active:bg-green-700;
 }
 
-.App-link {
-  color: #61dafb;
+.btn-success:focus {
+  box-shadow: 0 0 20px 3px rgb(22, 163, 74);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.btn-danger {
+  @apply text-white;
+  @apply bg-red-600;
+  @apply hover:bg-red-600;
+  @apply active:bg-red-700;
+}
+
+.btn-danger:focus {
+  box-shadow: 0 0 20px 3px rgb(220, 38, 38);
 }

@@ -1,24 +1,60 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
+import { AppHeader } from './components/appHeader';
+import { LightControls } from './components/lightControls';
+import { io } from 'socket.io-client';
+import React from 'react';
+
+let socket = io("http://localhost:3000");
+
+function extractLightData (lights) {
+  return lights.reduce((acc, light) => {
+    acc[light._id] = light;
+    return acc;
+  }, {});
+}
+
 
 function App() {
+  
+  function toggleLight(id) {
+    socket.emit("toggleLight", { id })
+  }
+
+  function setNewLightData (lightData) {
+    let data = extractLightData(lightData);
+    setLights(data);
+  }
+
+  let [lights, setLights] = useState({})
+
+  useEffect(() => {
+    socket.on("connection", lights => setNewLightData(lights));
+
+    socket.on("onLightToggled", lights => setNewLightData(lights));
+
+    return () => {
+      socket.off("connection");
+      socket.off("onLightToggled");
+    }
+  }, []);
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main>
+      <AppHeader />
+      <div className = "content">
+        {
+          Object.values(lights).map((light, key)=> (
+              <React.Fragment key={key}>
+                <LightControls 
+                  lightData={light}
+                  toggle={toggleLight}
+                />
+              </React.Fragment>
+          ))
+        }
+      </div>
+    </main>
   );
 }
 
